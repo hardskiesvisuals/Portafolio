@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,13 +22,19 @@
             --border-glass: rgba(255, 255, 255, 0.15);
         }
 
+        /* CORRECCIÓN DE DESPLAZAMIENTO HORIZONTAL */
+        html, body { 
+            overflow-x: hidden; 
+            width: 100%;
+            position: relative;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
 
         body {
             background-color: var(--negro);
             color: var(--blanco);
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             filter: brightness(1.08);
         }
@@ -67,17 +72,19 @@
             pointer-events: none;
             z-index: 999999;
             mix-blend-mode: difference;
-            transition: transform 0.15s ease;
+            transition: transform 0.1s ease-out;
+            transform: translate(-50%, -50%);
+            left: -100px; /* Fuera de vista inicial */
         }
 
-        /* FIX PROFESIONAL: BOTÓN DE MÚSICA INDEPENDIENTE */
+        /* BOTÓN DE MÚSICA */
         .music-control {
             position: fixed !important;
             bottom: 30px !important;
             right: 25px !important;
             width: 55px !important;
             height: 55px !important;
-            z-index: 999999999 !important; /* Z-INDEX MÁXIMO FORZADO */
+            z-index: 999999999 !important;
             background: rgba(10, 10, 10, 0.8) !important; 
             backdrop-filter: blur(15px) !important;
             -webkit-backdrop-filter: blur(15px) !important;
@@ -89,8 +96,8 @@
             justify-content: center !important;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5) !important;
             pointer-events: auto !important;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            -webkit-appearance: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            -webkit-tap-highlight-color: transparent;
         }
         
         .music-control i { 
@@ -245,6 +252,7 @@
             margin: 20px auto;
             border: 1px solid var(--border-glass);
             cursor: ew-resize;
+            touch-action: none;
         }
         .img-after { position: absolute; top:0; left:0; width:100%; height:100%; z-index:2; clip-path: inset(0 50% 0 0); }
         .comparison-container img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -403,7 +411,7 @@
     
     <div id="custom-cursor"></div>
 
-    <audio id="bg-music" loop>
+    <audio id="bg-music" loop preload="auto">
         <source src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/Please%2C%20Don't.mp3" type="audio/mpeg">
     </audio>
 
@@ -528,47 +536,69 @@
         <div class="footer-tag">EL ARTE ES MI DOPAMINA | EST. 2016</div>
     </footer>
 
-    <div class="music-control" id="musicBtn" onclick="toggleMusic()">
+    <div class="music-control" id="musicBtn" role="button" aria-label="Toggle music">
         <i class="fa-solid fa-music"></i>
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+        // Inicialización de AOS
         AOS.init({ duration: 1000, once: true });
         
+        // Cursor Personalizado Optimizado para no causar scroll lateral
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            const x = e.clientX;
+            const y = e.clientY;
+            cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
         });
 
+        // Comparador de Presets
         function moveSlider(e, container) {
             const rect = container.getBoundingClientRect();
-            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clientX = (e.type.includes('touch')) ? e.touches[0].clientX : e.clientX;
             if (!clientX) return;
-            const x = clientX - rect.left;
-            const percent = Math.min(Math.max((x / rect.width) * 100, 0), 100);
+            let x = clientX - rect.left;
+            let percent = Math.min(Math.max((x / rect.width) * 100, 0), 100);
             container.querySelector('.img-after').style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
             container.querySelector('.slider-line').style.left = percent + '%';
         }
 
-        let playing = false;
+        // LÓGICA DE MÚSICA CORREGIDA
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = musicBtn.querySelector('i');
+        let isPlaying = false;
+
         function toggleMusic() {
-            const audio = document.getElementById('bg-music');
-            const icon = document.querySelector('.music-control i');
-            const btn = document.getElementById('musicBtn');
-            if(!playing) { 
-                audio.play().catch(e => console.log("Interacción requerida")); 
-                playing = true;
-                icon.className = "fa-solid fa-pause";
-                btn.classList.add('playing');
+            if(!isPlaying) { 
+                audio.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicIcon.className = "fa-solid fa-pause";
+                        musicBtn.classList.add('playing');
+                    })
+                    .catch(e => {
+                        console.log("Interacción requerida por el navegador");
+                    }); 
             } else { 
                 audio.pause(); 
-                playing = false;
-                icon.className = "fa-solid fa-music";
-                btn.classList.remove('playing');
+                isPlaying = false;
+                musicIcon.className = "fa-solid fa-music";
+                musicBtn.classList.remove('playing');
             }
         }
+
+        // Eventos para el botón de música (Touch y Click)
+        musicBtn.addEventListener('click', toggleMusic);
+        musicBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            toggleMusic();
+        }, { passive: false });
+
+        // Asegurar que al recargar la página no haya scroll
+        window.scrollTo(0, 0);
     </script>
 </body>
 </html>
+  
