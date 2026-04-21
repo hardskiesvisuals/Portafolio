@@ -26,6 +26,8 @@
             overflow-x: hidden; 
             width: 100%;
             position: relative;
+            margin: 0;
+            padding: 0;
         }
 
         /* Cursor personalizado */
@@ -36,7 +38,14 @@
             color: var(--blanco);
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
+            /* EL FILTRO DE BRILLO SE HA MOVIDO A .main-design-layer PARA NO ROMPER EL FIXED */
+        }
+
+        /* NUEVA CAPA: Aplica tu brillo +8 solo al diseño, permitiendo que el botón flote */
+        .main-design-layer {
             filter: brightness(1.08);
+            width: 100%;
+            position: relative;
         }
 
         /* Banner de Urgencia */
@@ -77,7 +86,7 @@
             left: -100px;
         }
 
-        /* BOTÓN DE MÚSICA - CONFIGURACIÓN DE FUSIÓN ABSOLUTA */
+        /* BOTÓN DE MÚSICA - AHORA SÍ FLOTARÁ EN TODA LA PÁGINA */
         .music-control {
             position: fixed !important;
             bottom: 30px !important;
@@ -401,7 +410,7 @@
 </head>
 <body>
 
-    <!-- BANNER FIJO -->
+    <!-- ELEMENTOS FIJOS BLINDADOS (FUERA DEL FILTRO DE BRILLO) -->
     <div class="urgency-banner">
         <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/LOGO.webp" class="banner-logo" alt="Logo Banner">
         ⚠️ Quedan solo 2 cupos para proyectos esta semana
@@ -409,139 +418,144 @@
     
     <div id="custom-cursor"></div>
 
+    <!-- BOTÓN DE MÚSICA UBICADO AQUÍ ARRIBA PARA PERSISTENCIA TOTAL -->
+    <div class="music-control" id="musicBtn" role="button" aria-label="Toggle music">
+        <i class="fa-solid fa-music"></i>
+    </div>
+
     <audio id="bg-music" loop preload="auto">
         <source src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/Please%2C%20Don't.mp3" type="audio/mpeg">
     </audio>
 
-    <header class="hero">
-        <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/LOGO.webp" class="logo-box" data-aos="zoom-in">
-        <div class="tagline" data-aos="fade-up">El impacto comienza con lo visual</div>
-        <h1 data-aos="fade-up" data-aos-delay="200">HARD SKIES<br><span style="color:var(--rojo)">VISUALS</span></h1>
-    </header>
+    <!-- INICIO DE LA CAPA DE DISEÑO (Aplica el Brillo +8) -->
+    <div class="main-design-layer">
+        
+        <header class="hero">
+            <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/LOGO.webp" class="logo-box" data-aos="zoom-in">
+            <div class="tagline" data-aos="fade-up">El impacto comienza con lo visual</div>
+            <h1 data-aos="fade-up" data-aos-delay="200">HARD SKIES<br><span style="color:var(--rojo)">VISUALS</span></h1>
+        </header>
 
-    <div class="marquee">
-        <div class="marquee-content">
-            <span>CAMISETAS <b>PERSONALIZADAS</b></span>
-            <span>IMPRESIÓN <b>PUBLICITARIA</b></span>
-            <span>IMPRESIÓN <b>DIGITAL</b></span>
-            <span>VINIL <b>ADHESIVO</b></span>
-            <span>LONAS <b>PUBLICITARIAS</b></span>
-            <span>DISEÑO PARA <b>DTF</b></span>
-            <span>BRANDING <b>CORPORATIVO</b></span>
-            <span>MICRO<b>PERFORADO</b></span>
-            <span>CAMISETAS <b>PERSONALIZADAS</b></span>
-            <span>IMPRESIÓN <b>PUBLICITARIA</b></span>
-            <span>IMPRESIÓN <b>DIGITAL</b></span>
-            <span>VINIL <b>ADHESIVO</b></span>
-            <span>LONAS <b>PUBLICITARIAS</b></span>
-            <span>DISEÑO PARA <b>DTF</b></span>
-            <span>BRANDING <b>CORPORATIVO</b></span>
-            <span>MICRO<b>PERFORADO</b></span>
+        <div class="marquee">
+            <div class="marquee-content">
+                <span>CAMISETAS <b>PERSONALIZADAS</b></span>
+                <span>IMPRESIÓN <b>PUBLICITARIA</b></span>
+                <span>IMPRESIÓN <b>DIGITAL</b></span>
+                <span>VINIL <b>ADHESIVO</b></span>
+                <span>LONAS <b>PUBLICITARIAS</b></span>
+                <span>DISEÑO PARA <b>DTF</b></span>
+                <span>BRANDING <b>CORPORATIVO</b></span>
+                <span>MICRO<b>PERFORADO</b></span>
+                <span>CAMISETAS <b>PERSONALIZADAS</b></span>
+                <span>IMPRESIÓN <b>PUBLICITARIA</b></span>
+                <span>IMPRESIÓN <b>DIGITAL</b></span>
+                <span>VINIL <b>ADHESIVO</b></span>
+                <span>LONAS <b>PUBLICITARIAS</b></span>
+                <span>DISEÑO PARA <b>DTF</b></span>
+                <span>BRANDING <b>CORPORATIVO</b></span>
+                <span>MICRO<b>PERFORADO</b></span>
+            </div>
         </div>
-    </div>
 
-    <!-- PORTAFOLIO -->
-    <section class="section">
-        <h2 style="text-align: center; margin-bottom: 60px;" data-aos="fade-up">Portafolio</h2>
-        <div class="video-grid">
-            <div class="video-card" data-aos="fade-up">
-                <div class="video-item">
-                    <video src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/HV1.mp4" controls playsinline></video>
+        <!-- PORTAFOLIO -->
+        <section class="section">
+            <h2 style="text-align: center; margin-bottom: 60px;" data-aos="fade-up">Portafolio</h2>
+            <div class="video-grid">
+                <div class="video-card" data-aos="fade-up">
+                    <div class="video-item">
+                        <video src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/HV1.mp4" controls playsinline></video>
+                    </div>
+                    <div class="video-caption">Color grading cinemático</div>
                 </div>
-                <div class="video-caption">Color grading cinemático</div>
-            </div>
-            <div class="video-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="video-item">
-                    <video src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/HV2.mp4" controls playsinline></video>
+                <div class="video-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="video-item">
+                        <video src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/HV2.mp4" controls playsinline></video>
+                    </div>
+                    <div class="video-caption">ROI enfocado a negocios</div>
                 </div>
-                <div class="video-caption">ROI enfocado a negocios</div>
-            </div>
-            <div class="video-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="video-item">
-                    <video src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/HV3.mp4" controls playsinline></video>
+                <div class="video-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="video-item">
+                        <video src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/HV3.mp4" controls playsinline></video>
+                    </div>
+                    <div class="video-caption">Contenido para creadores</div>
                 </div>
-                <div class="video-caption">Contenido para creadores</div>
-            </div>
-            <div class="video-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="video-item">
-                    <video src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/HV4.mp4" controls playsinline></video>
+                <div class="video-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="video-item">
+                        <video src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/HV4.mp4" controls playsinline></video>
+                    </div>
+                    <div class="video-caption">Edición dopamínica</div>
                 </div>
-                <div class="video-caption">Edición dopamínica</div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ARTES -->
-    <section class="section">
-        <h2 style="text-align: center; margin-bottom: 50px;" data-aos="fade-up">Artes de Exhibición</h2>
-        <div class="art-description" data-aos="fade-up">
-            Fine Art de autoría exclusiva diseñada bajo conceptos de vanguardia visual
-        </div>
-        <div class="art-grid">
-            <div class="art-item" data-aos="zoom-in"><img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/ART1.webp" alt="Art 1"></div>
-            <div class="art-item" data-aos="zoom-in" data-aos-delay="100"><img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/ART2.webp" alt="Art 2"></div>
-            <div class="art-item" data-aos="zoom-in" data-aos-delay="200"><img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/ART3.webp" alt="Art 3"></div>
-            <div class="art-item" data-aos="zoom-in" data-aos-delay="300"><img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/ART4.webp" alt="Art 4"></div>
-        </div>
-    </section>
-
-    <!-- PRESETS -->
-    <section class="section">
-        <h2 style="text-align: center; margin-bottom: 25px;" data-aos="fade-up">Presets & Color Grading</h2>
-        <div class="presets-description" data-aos="fade-up">
-            Contamos con una amplia variedad de <b>Presets exclusivos para Lightroom</b> diseñados para elevar tus fotos al máximo nivel. Escríbenos por <b>WhatsApp</b> para conocer nuestro catálogo y adquirirlos hoy mismo.
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;">
-            <div class="comparison-container" data-aos="fade-right" onmousemove="moveSlider(event, this)" ontouchmove="moveSlider(event, this)">
-                <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/PL1.jpg" alt="Original">
-                <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/PL1.1.jpg" class="img-after" alt="Preset">
-                <div class="slider-line"></div>
+        <!-- ARTES -->
+        <section class="section">
+            <h2 style="text-align: center; margin-bottom: 50px;" data-aos="fade-up">Artes de Exhibición</h2>
+            <div class="art-description" data-aos="fade-up">
+                Fine Art de autoría exclusiva diseñada bajo conceptos de vanguardia visual
             </div>
-            <div class="comparison-container" data-aos="fade-left" onmousemove="moveSlider(event, this)" ontouchmove="moveSlider(event, this)">
-                <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/PL2.jpg" alt="Original">
-                <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/PL2.1.jpg" class="img-after" alt="Preset">
-                <div class="slider-line"></div>
+            <div class="art-grid">
+                <div class="art-item" data-aos="zoom-in"><img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/ART1.webp" alt="Art 1"></div>
+                <div class="art-item" data-aos="zoom-in" data-aos-delay="100"><img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/ART2.webp" alt="Art 2"></div>
+                <div class="art-item" data-aos="zoom-in" data-aos-delay="200"><img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/ART3.webp" alt="Art 3"></div>
+                <div class="art-item" data-aos="zoom-in" data-aos-delay="300"><img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/ART4.webp" alt="Art 4"></div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CONTACTO / CTA -->
-    <section class="cta-box">
-        <div class="conversion-hook" data-aos="fade-up">¡ ÚLTIMO LLAMADO !</div>
-        <div class="authority-message" data-aos="fade-up" data-aos-delay="100">
-            Transformamos tu visión en una <b>autoridad visual imparable</b>, construimos la identidad que te <b>destaca</b> por delante de la competencia.
-        </div>
-        <div class="service-highlights" data-aos="fade-up" data-aos-delay="150">
-            ADQUIERE: <b>PRESETS</b>, <b>ARTE DIGITAL</b>, <b>MERCH OFICIAL</b>, <b>IMPRESIÓN PUBLICITARIA</b>
-        </div>
-        <div class="contact-prompt" data-aos="fade-up" data-aos-delay="180">
-            CONTÁCTAME PARA COTIZAR TU <b>PROYECTO</b>
-        </div>
-        <div class="dopamine-line" data-aos="fade-up" data-aos-delay="200">
-            <span class="dopamine-question">¿ ESTÁN LISTOS PARA LA DOPAMINA ?</span>
-        </div>
-        <div class="button-group" data-aos="zoom-in" data-aos-delay="300">
-            <a href="https://wa.me/593985571902" class="btn-elite primary">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp
-            </a>
-            <a href="#" class="btn-elite">
-                <i class="fa-solid fa-cart-shopping"></i> Tienda Oficial
-            </a>
-            <a href="https://instagram.com/hardskiesvisuals" class="btn-elite">
-                <i class="fa-brands fa-instagram"></i> Instagram
-            </a>
-        </div>
-    </section>
+        <!-- PRESETS -->
+        <section class="section">
+            <h2 style="text-align: center; margin-bottom: 25px;" data-aos="fade-up">Presets & Color Grading</h2>
+            <div class="presets-description" data-aos="fade-up">
+                Contamos con una amplia variedad de <b>Presets exclusivos para Lightroom</b> diseñados para elevar tus fotos al máximo nivel. Escríbenos por <b>WhatsApp</b> para conocer nuestro catálogo y adquirirlos hoy mismo.
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;">
+                <div class="comparison-container" data-aos="fade-right" onmousemove="moveSlider(event, this)" ontouchmove="moveSlider(event, this)">
+                    <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/PL1.jpg" alt="Original">
+                    <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/PL1.1.jpg" class="img-after" alt="Preset">
+                    <div class="slider-line"></div>
+                </div>
+                <div class="comparison-container" data-aos="fade-left" onmousemove="moveSlider(event, this)" ontouchmove="moveSlider(event, this)">
+                    <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/PL2.jpg" alt="Original">
+                    <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/PL2.1.jpg" class="img-after" alt="Preset">
+                    <div class="slider-line"></div>
+                </div>
+            </div>
+        </section>
 
-    <footer>
-        <div class="footer-logo">HARD SKIES</div>
-        <div class="footer-tag">EL ARTE ES MI DOPAMINA | EST. 2016</div>
-    </footer>
+        <!-- CONTACTO / CTA -->
+        <section class="cta-box">
+            <div class="conversion-hook" data-aos="fade-up">¡ ÚLTIMO LLAMADO !</div>
+            <div class="authority-message" data-aos="fade-up" data-aos-delay="100">
+                Transformamos tu visión en una <b>autoridad visual imparable</b>, construimos la identidad que te <b>destaca</b> por delante de la competencia.
+            </div>
+            <div class="service-highlights" data-aos="fade-up" data-aos-delay="150">
+                ADQUIERE: <b>PRESETS</b>, <b>ARTE DIGITAL</b>, <b>MERCH OFICIAL</b>, <b>IMPRESIÓN PUBLICITARIA</b>
+            </div>
+            <div class="contact-prompt" data-aos="fade-up" data-aos-delay="180">
+                CONTÁCTAME PARA COTIZAR TU <b>PROYECTO</b>
+            </div>
+            <div class="dopamine-line" data-aos="fade-up" data-aos-delay="200">
+                <span class="dopamine-question">¿ ESTÁN LISTOS PARA LA DOPAMINA ?</span>
+            </div>
+            <div class="button-group" data-aos="zoom-in" data-aos-delay="300">
+                <a href="https://wa.me/593985571902" class="btn-elite primary">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="#" class="btn-elite">
+                    <i class="fa-solid fa-cart-shopping"></i> Tienda Oficial
+                </a>
+                <a href="https://instagram.com/hardskiesvisuals" class="btn-elite">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </section>
 
-    <!-- BOTÓN DE MÚSICA UBICADO AL FINAL DEL BODY PARA MÁXIMA PERSISTENCIA -->
-    <div class="music-control" id="musicBtn" role="button" aria-label="Toggle music">
-        <i class="fa-solid fa-music"></i>
-    </div>
+        <footer>
+            <div class="footer-logo">HARD SKIES</div>
+            <div class="footer-tag">EL ARTE ES MI DOPAMINA | EST. 2016</div>
+        </footer>
+
+    </div> <!-- FIN DE LA CAPA DE DISEÑO -->
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
